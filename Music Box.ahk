@@ -30,8 +30,11 @@ Gui,Add,Text,x0 y480 w420 h20 vSelectedFile Center,Select a song.
 Gui,Add,Picture,x0 y500 w60 h60 gOnPlayButton vPlayButton,Images\Fa.png
 Gui,Add,Progress,x60 y500 w300 h60 vProgressBar Border c530500 BackgroundFFFFFF,0
 Gui,Add,Picture,x360 y500 w60 h60 gOnRewindButton,Images\Return.png
+Gui,Add,Text,x2 y562 w25 h20 vChatLabel Left,Chat
+Gui,Add,Edit,x25 y560 w355 h20 vChatField
+Gui,Add,Button,x380 y560 w40 h20 +default gSubmitChat vChatButton,Send
 Gui,Color,FFFFFF
-Gui,Show,w420 h560,Guild Wars 2 Music Box
+Gui,Show,w420 h580,Guild Wars 2 Music Box
 GuiControl, Hide, SelectedInstrumentBar
 Gui,NewSong:Add,Text,x0 y3 w50 h20 Center,Title
 Gui,NewSong:Add,Edit,x50 y0 w350 h20 vNewSongTitle,
@@ -85,6 +88,20 @@ InitHotkeys:
 	if RewindBind
 	{
 		Hotkey, %RewindBind%, OnRewindButton
+	}
+return
+
+SubmitChat:
+	Gui, Submit, NoHide
+	if ChatField
+	{
+		GuiControl, , ChatField
+		SetKeyDelay, 10, 10
+		ControlSend,, {Enter}, ahk_exe %ProcessName%
+		ControlSendRaw,, %ChatField%, ahk_exe %ProcessName%
+		ControlSend,, {Enter}, ahk_exe %ProcessName%
+		ChatField := ""
+		SetKeyDelay, -1, -1
 	}
 return
 
